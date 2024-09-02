@@ -1,0 +1,31 @@
+
+<div class="card">
+    <h1 class="title">Auto Park</h1>
+    <div *ngIf="images" class="thumbnail-container">
+        <div *ngFor="let image of images; let index = index" class="thumbnail-item">
+            <img 
+                [src]="image.thumbnailImageSrc" 
+                [alt]="image.alt" 
+                class="thumbnail-image"
+                loading="lazy"
+                (click)="imageClick(index)" />
+        </div>
+    </div>
+    <p-galleria
+        [value]="images"
+        [(visible)]="displayCustom"
+        [(activeIndex)]="activeIndex"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ 'max-width': '850px' }"
+        [numVisible]="7"
+        [circular]="true"
+        [fullScreen]="true"
+        [showItemNavigators]="true"
+        [showThumbnails]="false">
+        <ng-template pTemplate="item" let-item>
+            <img 
+                [src]="item.itemImageSrc" 
+                style="width: 100%; height: auto; display: block;" />
+        </ng-template>
+    </p-galleria>
+</div>

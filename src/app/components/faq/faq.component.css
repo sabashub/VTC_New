@@ -1,0 +1,28 @@
+.card{
+    margin: auto;
+    margin-top: 50px;
+    width: 95%;
+    display: flex;
+    
+}
+
+
+::ng-deep .p-accordion .p-accordion-header-link {
+    background-color: rgb(61, 61, 194) !important;
+    color: white !important; /* Ensures text color is readable */
+}
+
+::ng-deep .p-accordion .p-accordion-header-link:focus,
+::ng-deep .p-accordion .p-accordion-header-link:hover {
+    background-color: darkblue !important; /* Changes color on hover/focus */
+}
+
+::ng-deep .p-accordion .p-accordion-content {
+    background-color: #3a96e6 !important; /* Optional: Change content background */
+}
+
+.m-0 {
+    font-size: 1.2em; /* Adjust size as needed */
+    font-weight: bold;
+    color: white;
+}

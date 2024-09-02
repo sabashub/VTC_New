@@ -1,0 +1,56 @@
+.container {
+    
+   
+    display: flex;
+    flex-direction: row;
+    
+    width: 95%;
+    margin: auto;
+    margin-top: 50px;
+    
+    background: rgb(233, 210, 210);
+    height: 500px;
+    
+    border-radius: 8px;
+  }
+  
+  .image {
+    width: 50%;
+    
+  }
+
+  .content{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+
+    margin-left: 50px;
+    color:  #0d3054;
+  }
+
+  .content h1{
+    /* font-family: var(--font-family); */
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -0.04em;
+  }
+
+  .content p{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: #0d3054;
+
+    
+  }
+  
+ 
+  
+
+  
+
+ 
+
+ 

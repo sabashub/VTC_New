@@ -1,0 +1,66 @@
+<div class="navbar" [ngClass]="{'scrolled': isScrolled}">
+    <div class="navbar-links">
+        <div class="navbar-links_logo">
+            <h4 class="title_header">Vans Transport Company</h4>
+        </div>
+
+        <div class="navbar-links_container">
+            <p class="nav-item">Accueil</p>
+            <p class="nav-item">Nos véhicules</p>
+            <p class="nav-item">FAQ</p>
+            <p class="nav-item">Nous contacter</p>
+        </div>
+        <div class="buttons">
+            <p-button label="Call" [raised]="true" severity="success" />
+            <p-button label="Book Reservation" [raised]="true" (onClick)="showDialog()" />
+        </div>
+    </div>
+
+    <!-- Dialog Component -->
+    <p-dialog header="Book a Reservation" [modal]="true" [(visible)]="visible" [style]="{ width: '900px' }" [baseZIndex]="10000">
+        <p class="p-text-secondary block mb-5">Please provide your details to book a reservation.</p>
+
+        <div class="flex-vertical">
+            <div class="form-group">
+                <label for="firstname" class="font-semibold">First Name</label>
+                <input pInputText id="firstname" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <label for="lastname" class="font-semibold">Last Name</label>
+                <input pInputText id="lastname" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="font-semibold">Email</label>
+                <input pInputText id="email" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <label for="telephone" class="font-semibold">Telephone, WhatsApp - Viber</label>
+                <input pInputText id="telephone" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <label for="startPoint" class="font-semibold">Start Point</label>
+                <input pInputText id="startPoint" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <label for="destination" class="font-semibold">Destination</label>
+                <input pInputText id="destination" autocomplete="off" />
+            </div>
+
+            <!-- Datetime Input Field -->
+            <div class="form-group">
+                <label for="reservationDatetime" class="font-semibold">Reservation Date & Time</label>
+                <input type="datetime-local" id="reservationDatetime" autocomplete="off" />
+            </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2 mt-3">
+            <p-button label="Cancel" severity="secondary" (onClick)="visible = false"></p-button>
+            <p-button label="Save" (onClick)="saveReservation()"></p-button>
+        </div>
+    </p-dialog>
+</div>
