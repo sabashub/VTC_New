@@ -1,66 +1,88 @@
 <div class="navbar" [ngClass]="{'scrolled': isScrolled}">
     <div class="navbar-links">
-        <div class="navbar-links_logo">
-            <h4 class="title_header">Vans Transport Company</h4>
-        </div>
-
-        <div class="navbar-links_container">
-            <p class="nav-item">Accueil</p>
-            <p class="nav-item">Nos véhicules</p>
-            <p class="nav-item">FAQ</p>
-            <p class="nav-item">Nous contacter</p>
-        </div>
-        <div class="buttons">
-            <p-button label="Call" [raised]="true" severity="success" />
-            <p-button label="Book Reservation" [raised]="true" (onClick)="showDialog()" />
-        </div>
+      <div class="navbar-links_logo">
+        <h4 class="title_header">Vans Transport Company</h4>
+      </div>
+  
+      <div class="navbar-links_container">
+        <p class="nav-item">Accueil</p>
+        <p class="nav-item">Nos véhicules</p>
+        <p class="nav-item">FAQ</p>
+        <p class="nav-item">Nous contacter</p>
+      </div>
+      <div class="buttons">
+        <p-button label="Call" [raised]="true" severity="success"></p-button>
+        <p-button label="Book Reservation" [raised]="true" (onClick)="showDialog()"></p-button>
+      </div>
     </div>
-
+  
     <!-- Dialog Component -->
     <p-dialog header="Book a Reservation" [modal]="true" [(visible)]="visible" [style]="{ width: '900px' }" [baseZIndex]="10000">
-        <p class="p-text-secondary block mb-5">Please provide your details to book a reservation.</p>
-
-        <div class="flex-vertical">
-            <div class="form-group">
-                <label for="firstname" class="font-semibold">First Name</label>
-                <input pInputText id="firstname" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="lastname" class="font-semibold">Last Name</label>
-                <input pInputText id="lastname" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="email" class="font-semibold">Email</label>
-                <input pInputText id="email" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="telephone" class="font-semibold">Telephone, WhatsApp - Viber</label>
-                <input pInputText id="telephone" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="startPoint" class="font-semibold">Start Point</label>
-                <input pInputText id="startPoint" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="destination" class="font-semibold">Destination</label>
-                <input pInputText id="destination" autocomplete="off" />
-            </div>
-
-            <!-- Datetime Input Field -->
-            <div class="form-group">
-                <label for="reservationDatetime" class="font-semibold">Reservation Date & Time</label>
-                <input type="datetime-local" id="reservationDatetime" autocomplete="off" />
-            </div>
+      <p class="p-text-secondary block mb-5">Please provide your details to book a reservation.</p>
+  
+      <form [formGroup]="reservationForm" class="flex-vertical">
+        <div class="form-group">
+          <label for="firstname" class="font-semibold">First Name</label>
+          <input pInputText id="First_Name" formControlName="First_Name" autocomplete="off" />
+          <div *ngIf="reservationForm.get('First_Name')?.invalid && reservationForm.get('First_Name')?.touched">
+            First name is required.
+          </div>
         </div>
-
-        <div class="flex justify-content-end gap-2 mt-3">
-            <p-button label="Cancel" severity="secondary" (onClick)="visible = false"></p-button>
-            <p-button label="Save" (onClick)="saveReservation()"></p-button>
+  
+        <div class="form-group">
+          <label for="lastname" class="font-semibold">Last Name</label>
+          <input pInputText id="Last_Name" formControlName="Last_Name" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Last_Name')?.invalid && reservationForm.get('Last_Name')?.touched">
+            Last name is required.
+          </div>
         </div>
+  
+        <div class="form-group">
+          <label for="email" class="font-semibold">Email</label>
+          <input pInputText id="Email" formControlName="Email" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Email')?.invalid && reservationForm.get('Email')?.touched">
+            A valid email is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="telephone" class="font-semibold">Telephone, WhatsApp - Viber</label>
+          <input pInputText id="Telephone" formControlName="Telephone" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Telephone')?.invalid && reservationForm.get('Telephone')?.touched">
+            Telephone is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="startPoint" class="font-semibold">Start Point</label>
+          <input pInputText id="Start_Point" formControlName="Start_Point" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Start_Point')?.invalid && reservationForm.get('Start_Point')?.touched">
+            Start Point is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="destination" class="font-semibold">Destination</label>
+          <input pInputText id="Destination" formControlName="Destination" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Destination')?.invalid && reservationForm.get('Destination')?.touched">
+            Destination is required.
+          </div>
+        </div>
+  
+        <!-- Datetime Input Field -->
+        <div class="form-group">
+          <label for="reservationDatetime" class="font-semibold">Reservation Date & Time</label>
+          <input type="datetime" id="Reservation_Date" formControlName="Reservation_Date" autocomplete="off" />
+          <div *ngIf="reservationForm.get('Reservation_Date')?.invalid && reservationForm.get('Reservation_Date')?.touched">
+            Reservation Date & Time is required.
+          </div>
+        </div>
+      </form>
+  
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button label="Cancel" severity="secondary" (onClick)="visible = false"></p-button>
+        <p-button label="Save" (onClick)="saveReservation()"></p-button>
+      </div>
     </p-dialog>
-</div>
+  </div>
+  
