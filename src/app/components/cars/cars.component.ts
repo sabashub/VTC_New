@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { GalleriaModule } from 'primeng/galleria';
-
+import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 @Component({
   selector: 'app-cars',
   standalone: true,
-  imports: [GalleriaModule],
+  imports: [GalleriaModule, AnimateOnScrollModule],
   templateUrl: './cars.component.html',
   styleUrl: './cars.component.css'
 })

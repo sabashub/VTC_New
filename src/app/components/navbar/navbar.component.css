@@ -64,12 +64,21 @@
 }
 
 .nav-item:hover {
-  /* Color on hover */
+ color:#54b3d6;
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center;
+  flex-grow: 1; /* Allow this container to grow and take up available space */
 }
 
 .buttons {
   display: flex;
   gap: 20px;
+  margin-left: auto; /* Push buttons to the right side */
+  margin-right: 30px;
 }
 
 .flex-vertical {
@@ -114,3 +123,28 @@ input[type="datetime-local"] {
   font-size: 1rem;
   box-sizing: border-box;
 }
+
+/* Ensure the dialog footer uses flexbox to space out its children */
+.flex {
+  display: flex;
+  justify-content: space-between; /* Space out children */
+  align-items: center; /* Vertically center items */
+}
+
+.flex button {
+  margin: 0; /* Remove default margin */
+}
+
+/* Optional: Add some margin to the buttons if needed */
+.flex button:first-child {
+  margin-right: auto; /* Push "Save" button to the left */
+}
+
+.flex button:last-child {
+  margin-left: auto; /* Push "Cancel" button to the right */
+}
+
+a{
+  text-decoration: none;
+}
+

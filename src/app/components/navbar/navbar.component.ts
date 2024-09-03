@@ -8,20 +8,22 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Reservation } from '../../Models/Reservation';
 import { VtcService } from '../../vtc.service';
-@Component({
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { RouterModule } from '@angular/router';@Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, ButtonModule, DialogModule, InputTextModule, CalendarModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ButtonModule, DialogModule, InputTextModule, CalendarModule, FormsModule, ReactiveFormsModule, ToastModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
+  providers: [MessageService]
 })
 export class NavbarComponent {
   isScrolled = false;
   visible: boolean = false;
-  reservationDate: Date | null = null; 
   reservationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private vtcService: VtcService) {
+  constructor(private fb: FormBuilder, private vtcService: VtcService, private messageService: MessageService) {
     this.reservationForm = this.fb.group({
       First_Name: ['', Validators.required],
       Last_Name: ['', Validators.required],
@@ -29,7 +31,8 @@ export class NavbarComponent {
       Telephone: ['', Validators.required],
       Start_Point: ['', Validators.required],
       Destination: ['', Validators.required],
-      Reservation_Date: ['', Validators.required]
+      Reservation_Date: ['', Validators.required],
+      Reservation_Time: ['', Validators.required]
     });
   }
 
@@ -44,21 +47,60 @@ export class NavbarComponent {
 
   saveReservation() {
     if (this.reservationForm.valid) {
-      const reservationData: Reservation = this.reservationForm.value as Reservation;
-      this.vtcService.BookReservation(reservationData).subscribe({
-        next: (response) => {
-          console.log('Reservation saved!', response);
-          this.reservationForm.reset();
-          this.visible = false;
-        },
-        error: (error) => {
-          console.error('Error saving reservation', error);
-        }
-      });
-    } else {
-      console.log('Form is invalid');
-      this.reservationForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
+      const date = this.reservationForm.get('Reservation_Date')?.value;
+      const time = this.reservationForm.get('Reservation_Time')?.value;
 
+      if (date && time) {
+        const dateTime = new Date(`${date}T${time}`);
+        const formattedTime = dateTime.toISOString().substring(11, 16);
+
+        const reservationData = {
+          ...this.reservationForm.value,
+          Reservation_Date: `${date} ${formattedTime}`
+        };
+
+        this.vtcService.BookReservation(reservationData).subscribe({
+          next: (response) => {
+           
+            this.messageService.add({ severity: 'success', summary: 'Reservation sent successfully!', detail: 'Our operator will call for details' });
+            this.reservationForm.reset();
+            this.visible = false;
+          },
+          error: (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error saving reservation' });
+          }
+        });
+      } else {
+        this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Date and time are required' });
+      }
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please fill all fields' });
+      this.reservationForm.markAllAsTouched();
     }
   }
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
 }
+}
+
+
+// create or replace package PKG_SABA_VTC_RESERVATIONS is
+       
+
+//        procedure book_reservation(p_first_name varchar2, p_last_name varchar2, p_email varchar2, p_telephone varchar2,
+//           p_start_point varchar2, p_destination varchar2, p_reservation_date varchar2);
+
+
+// end PKG_SABA_VTC_RESERVATIONS;
+
+// create or replace package body PKG_SABA_VTC_RESERVATIONS is
+// procedure book_reservation(p_first_name varchar2, 
+//                    p_last_name varchar2, p_email varchar2, p_telephone varchar2,
+//           p_start_point varchar2, p_destination varchar2, p_reservation_date varchar2) is
+//           begin
+//                insert into saba_reservations(first_name, last_name, email, telephone, starting_point, destination, reservation_date)
+//                values(p_first_name,p_last_name,p_email, p_telephone, p_start_point, p_destination, p_reservation_date);
+          
+//           end book_reservation;
+  
+// end PKG_SABA_VTC_RESERVATIONS;
