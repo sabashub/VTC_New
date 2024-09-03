@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { GalleriaModule } from 'primeng/galleria';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 @Component({
@@ -8,7 +8,7 @@ import { AnimateOnScrollModule } from 'primeng/animateonscroll';
   templateUrl: './cars.component.html',
   styleUrl: './cars.component.css'
 })
-export class CarsComponent {
+export class CarsComponent implements AfterViewInit {
   displayCustom: boolean = false;
   activeIndex: number = 0;
   images: any[] = [];
@@ -45,5 +45,20 @@ export class CarsComponent {
 
     // Debugging: log the selected image source
     console.log('Selected image source:', this.images[index].itemImageSrc);
+  }
+  ngAfterViewInit() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        console.log('Intersecting:', entry.isIntersecting, entry.target); // Add this line
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fadein');
+        } else {
+          entry.target.classList.remove('fadein');
+        }
+      });
+    });
+  
+    const targets = document.querySelectorAll('.card, .thumbnail-item, .title');
+    targets.forEach(target => observer.observe(target));
   }
 }
